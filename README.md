@@ -138,10 +138,10 @@ make clean
 - Black areas are unexplored
 
 ### Win Condition
-Successfully ascend all three dungeon levels by locating and using the ladder (`>`) on each floor. Ascend the final ladder (`^`) to achieve victory and display a congratulatory screen commending your achievement.
+Successfully ascend all three dungeon levels by locating and using the ladder (`>`) on each floor. Ascend the final ladder (`^`) to win the game and display a congratulatory screen commending your achievement.
 
 ### Loss Condition
-If the player's health points (HP) reach zero, the game is lost and the death screen is displayed, noting the level reached by the player.
+If the player's health points (HP) reach zero, the game is lost, and the death screen is displayed, noting the highest level reached by the player.
 
 ### Stat Tracking
 The total number of monsters defeated ("juggs hit"), the player's HP and attack, and the current level are tracked during each run.
