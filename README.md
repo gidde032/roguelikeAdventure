@@ -129,6 +129,8 @@ make clean
 - `+` - Medkit (restores 50 HP)
 - `*` - Bandage (restores 25 HP)
 - `&` - Attack Potion (permanently increases attack by 2)
+- `0` - Used healing items
+- `u` - Used Attack Potions
 
 **Visibility**: 
 - White tiles are currently visible
