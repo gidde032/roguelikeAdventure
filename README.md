@@ -157,13 +157,13 @@ The HUD displays:
 ## Design Decisions
 
 ### Memory Management
-Dynamic memory allocation is used for all game entities, and carefully deallocated with the `closeGame()` function when needed. Arrays are pre-allocated with sufficient capacity (200 monsters, 30 heals, 30 items) to avoid reallocation during gameplay.
+Memory is dynamically allocated for all game entities, and carefully deallocated with the `closeGame()` function when needed. Arrays are pre-allocated with sufficient capacity (200 monsters, 30 heals, 30 items) to avoid reallocation during gameplay.
 
 ### Modular Architecture
-Each enemy type and system (FOV, combat, rendering) is separated into its own source file for maintainability and scalability. The header file maintains a single source of information for all shared data structures.
+Each enemy type and game system (FOV, combat, rendering) is separated into its own source file for maintainability and scalability. The header file maintains a single source of information for all shared data structures.
 
 ### Color System
-Roguelike Adventure makes use of 8 distinct color pairs to differentiate entities and provide visual clarity even in dense dungeon areas.
+Roguelike Adventure makes use of 8 distinct color pairs to differentiate between entities and provide visual clarity, even in densely populated dungeon areas.
 
 ## Known Limitations
 
@@ -179,10 +179,6 @@ Planned features for expansion:
 - Boss encounters at level transitions
 - Unique dungeon themes with visual variation
 - Score tracking and leaderboard system
-
-## License
-
-This project is available for educational and portfolio purposes.
 
 ---
 
