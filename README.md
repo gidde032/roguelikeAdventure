@@ -6,7 +6,7 @@ A terminal-based roguelike dungeon crawler built in C with ncurses. Navigate pro
 
 - **Procedurally Generated Levels**: Each playthrough features unique dungeon layouts with 20-34 randomly generated rooms connected by hallways.
 - **Field of View (FOV) System**: Dynamic line-of-sight calculations using Bresenham's algorithm reveal only what is in view of the player.
-- **Progressive Difficulty**: Three levels with escalating enemy difficulty and spawn rates.
+- **Progressive Difficulty**: Four levels with escalating enemy difficulty and spawn rates.
 - **Strategic Combat**: Turn-based combat with multiple enemy types, each with distinct stats and behaviors.
 - **Item System**: Healing items (medkits, bandages) and power-ups (attack potions) scattered throughout levels.
 - **Persistent Memory Management**: Efficient allocation and deallocation of game entities upon each level-up.
