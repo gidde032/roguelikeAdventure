@@ -197,8 +197,6 @@ Planned features for expansion:
 - Unique dungeon themes with visual variation
 - Score tracking and leaderboard system
 
----
-
 ## Credits
 
 - **Author**: Finn Gidden
