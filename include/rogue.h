@@ -85,6 +85,7 @@ void closeGame(void);
 void levelUp(void);
 void showTitleScreen(void);
 void showDeathScreen(void);
+void showVictoryScreen(void);
 
 //map funcs
 Tile** createMapTiles(void);

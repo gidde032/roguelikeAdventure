@@ -30,7 +30,7 @@ void handleInput(int input) { //controls, wasd movement
             newPos.x++;
             break;
         case 'r':
-            if (map[player->pos.y][player->pos.x].ch == '>') {
+            if (map[player->pos.y][player->pos.x].ch == '>' || map[player->pos.y][player->pos.x].ch == '^') {
                 levelUp();
             }
             break;

@@ -50,6 +50,6 @@ void drawEverything(void) { //clears window and draws player + map + mons + heal
     mvprintw(0,0, "HP: %d/%d. Don't get jugged.", player->hP, player->maxHP); //HP bar
     mvprintw(1, 0, "ATK: %d", player->attack); //attack bar
     mvprintw(2, 0, "LVL: %d", currentLevel); //level tracker
-    mvprintw(3, 0, "JUGGS: %d", monsJugged); //jugg tracker
+    mvprintw(3, 0, "JUGGS HIT: %d", monsJugged); //jugg tracker
     mvprintw(MAP_HEIGHT+1, 0, "Monsters nearby!");
 }

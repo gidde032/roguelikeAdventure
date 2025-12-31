@@ -90,6 +90,10 @@ Position setupMap(void) {
         map[rooms[n_rooms-1].center.y][rooms[n_rooms-1].center.x].ch = '>';
         map[rooms[n_rooms-1].center.y][rooms[n_rooms-1].center.x].walkable = true;
     }
+    else if (currentLevel == maxLevels) {
+        map[rooms[n_rooms-1].center.y][rooms[n_rooms-1].center.x].ch = '^';
+        map[rooms[n_rooms-1].center.y][rooms[n_rooms-1].center.x].walkable = true;
+    }
     int hpInc = 3;
     int atkInc = 2;
     if (currentLevel > 0) {

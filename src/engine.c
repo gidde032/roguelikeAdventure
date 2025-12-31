@@ -67,7 +67,7 @@ void closeGame(void) { //exits game and frees leftover memory
 void levelUp(void) {
     currentLevel++;
     if (currentLevel > maxLevels) {
-        return;
+        showVictoryScreen();
     }
     for (int i = 0; i < monCount; i++) {
         mons[i] = NULL;
@@ -78,8 +78,20 @@ void levelUp(void) {
     for (int i = 0; i < itemCount; i++) {
         items[i] = NULL;
     }
+    
     monCount = healCount = itemCount = 0;
     clearFOV(player);
+
+    for (int y = 0; y < MAP_HEIGHT; y++) {
+        for (int x = 0; x < MAP_WIDTH; x++) {
+            map[y][x].ch = '#';
+            map[y][x].walkable = false;
+            map[y][x].transparent = false;
+            map[y][x].visible = false;
+            map[y][x].seen = false;
+        }
+    }
+
     Position start_pos = setupMap();
     player->pos = start_pos;
     makeFOV(player);
@@ -91,41 +103,45 @@ void showTitleScreen(void) {
     
     // Game Title
     attron(COLOR_PAIR(8));
-    mvprintw(1, MAP_WIDTH/2 - 39, "  ____ ___   __ __   ___ ____  ______ __ __ ____    ___ _____      ___  _____ ");
-    mvprintw(2, MAP_WIDTH/2 - 39, " /    |   \\ |  |  | /  _|    \\|      |  |  |    \\  /  _/ ___/     /   \\|     |");
-    mvprintw(3, MAP_WIDTH/2 - 39, "|     |    \\|  |  |/  [_|  _  |      |  |  |  \\  )/  [(   \\_     |  _  |   __|");
-    mvprintw(4, MAP_WIDTH/2 - 39, "|  ^  |  \\  |  |  |    _|  |  |_|  |_|  |  |  / /|    _\\__  |    | / \\ |  |_  ");
-    mvprintw(5, MAP_WIDTH/2 - 39, "|  _  |   | |  :  |   [_|  |  | |  | |  :  |    \\|   [_/  \\ |    | \\_/ |   _] ");
-    mvprintw(6, MAP_WIDTH/2 - 39, "|  |  |  /  |\\   /|     |  |  | |  | |     |  .  |     \\    |    |     |  |   ");
-    mvprintw(7, MAP_WIDTH/2 - 39, "|__|__|_____| \\_/ |_____|__|__| |__|  \\__,_|__|\\_|_____|\\___|     \\___/|__|   ");
-    
-    mvprintw(8, MAP_WIDTH/2 - 23, "  ____ __ __  ____  ____ __   __  ____ ____  ");
-    mvprintw(9, MAP_WIDTH/2 - 23, " |    |  |  |/    |/    |  \\_/  |/    |    \\ ");
-    mvprintw(10, MAP_WIDTH/2 - 23, " |__  |  |  |   __|   __|       |     |  _  |");
-    mvprintw(11, MAP_WIDTH/2 - 23, " __|  |  |  |  |  |  |  |  \\_/  |  ^  |  |  |");
-    mvprintw(12, MAP_WIDTH/2 - 23, "/  |  |  :  |  |_ |  |_ |  | |  |  _  |  |  |");
-    mvprintw(13, MAP_WIDTH/2 - 23, "\\  `  |     |     |     |  | |  |  |  |  |  |");
-    mvprintw(14, MAP_WIDTH/2 - 23, " \\____j\\__,_|___,_|___,_|__| |__|__|__|__|__|");
+    mvprintw(1, MAP_WIDTH/2 - 40, "  _____ _  _ ___     _   _____   _____ _  _ _____ _   _ ___ ___ ___    ___  ___ ");
+    mvprintw(2, MAP_WIDTH/2 - 40, " |_   _| || | __|   /_\\ |   \\ \\ / / __| \\| |_   _| | | | -_| __/ __|  / _ \\| __|");
+    mvprintw(3, MAP_WIDTH/2 - 40, "   | | | __ | _|   / _ \\| |) \\ V /| _|| .` | | | | |_| |  \\| _|\\__ \\ | (_) | _| ");
+    mvprintw(4, MAP_WIDTH/2 - 40, "   |_| |_||_|___| /_/ \\_|___/ \\_/ |___|_|\\_| |_|  \\___/|_\\_\\___|___/  \\___/|_|  ");
+
+    mvprintw(5, MAP_WIDTH/2 - 47, "         ,---._                                              ____                        ,--. ");
+    mvprintw(6, MAP_WIDTH/2 - 47, "       .-- -.' \\               ,----..    ,----..          ,'  , `.  ,---,             ,--.'| ");
+    mvprintw(7, MAP_WIDTH/2 - 47, "       |    |   :        ,--, /   /   \\  /   /   \\      ,-+-,.' _ | '  .' \\        ,--,:  : | ");
+    mvprintw(8, MAP_WIDTH/2 - 47, "       :    ;   |      ,'_ /||   :     :|   :     :  ,-+-. ;   , ||/  ;    '.   ,`--.'`|  ' : ");
+    mvprintw(9, MAP_WIDTH/2 - 47, "       :        | .--. |  | :.   |  ;. /.   |  ;. / ,--.'|'   |  ;:  :       \\  |   :  :  | | ");
+    mvprintw(10, MAP_WIDTH/2 - 47, "       |    :   ,'_ /| :  . |.   ; /--` .   ; /--` |   |  ,', |  ':  |   /\\   \\ :   |   \\ | : ");
+    mvprintw(11, MAP_WIDTH/2 - 47, "       :        |  ' | |  . .;   | ;  __;   | ;  __|   | /  | |  ||  :  ' ;.   :|   : '  '; | ");
+    mvprintw(12, MAP_WIDTH/2 - 47, "       |    ;   |  | ' |  | ||   : |.' .|   : |.' .'   | :  | :  ||  |  ;/  \\   '   ' ;.    ; ");
+    mvprintw(13, MAP_WIDTH/2 - 47, "   ___ l        :  | | :  ' ;.   | '_.' .   | '_.' ;   . |  ; |--''  :  | \\  \\ ,|   | | \\   | ");
+    mvprintw(14, MAP_WIDTH/2 - 47, " /    /\\    J   |  ; ' |  | ''   ; : \\  '   ; : \\  |   : |  | ,   |  |  '  '--' '   : |  ; .' ");
+    mvprintw(15, MAP_WIDTH/2 - 47, "/  ../  `..-    :  | : ;  ; |'   | '/  .'   | '/  .|   : '  |/    |  :  :       |   | '`--'   ");
+    mvprintw(16, MAP_WIDTH/2 - 47, "\\    \\         ;'  :  `--'   |   :    / |   :    / ;   | |`-'     |  | ,'       '   : |       ");
+    mvprintw(17, MAP_WIDTH/2 - 47, " \\    \\      ,' :  ,      .-./\\   \\ .'   \\   \\ .'  |   ;/         `--''         ;   |.'       ");
+    mvprintw(18, MAP_WIDTH/2 - 47, "  \"---....--'    `--`----'     `---`      `---`    '---'                        '---'         ");
     attroff(COLOR_PAIR(8));
     
     // Menu Options
     attron(COLOR_PAIR(4));
-    mvprintw(16, MAP_WIDTH/2 - 16, "            __ ___      _ ___ ");
-    mvprintw(17, MAP_WIDTH/2 - 16, " /|   __   (_   |  /\\  |_) |  ");
-    mvprintw(18, MAP_WIDTH/2 - 16, "  |        __)  | /--\\ | \\ |  ");
+    mvprintw(20, MAP_WIDTH/2 - 15, "            __ ___      _ ___ ");
+    mvprintw(21, MAP_WIDTH/2 - 15, " /|   __   (_   |  /\\  |_) |  ");
+    mvprintw(22, MAP_WIDTH/2 - 15, "  |        __)  | /--\\ | \\ |  ");
     attroff(COLOR_PAIR(4));
 
     attron(COLOR_PAIR(7));
-    mvprintw(20, MAP_WIDTH/2 - 16, " _          _     _   __  _ ");
-    mvprintw(21, MAP_WIDTH/2 - 16, "  )   __   /  |  / \\ (_  |_ ");
-    mvprintw(22, MAP_WIDTH/2 - 16, " /_        \\_ |_ \\_/ __) |_ ");
+    mvprintw(24, MAP_WIDTH/2 - 14, " _          _     _   __  _ ");
+    mvprintw(25, MAP_WIDTH/2 - 14, "  )   __   /  |  / \\ (_  |_ ");
+    mvprintw(26, MAP_WIDTH/2 - 14, " /_        \\_ |_ \\_/ __) |_ ");
     attroff(COLOR_PAIR(7));
     
     // Controls Legend
     attron(COLOR_PAIR(3));
-    mvprintw(24, MAP_WIDTH/2 - 33, "             __  _           _    |    _    ___ _     _    ___ ___");
-    mvprintw(25, MAP_WIDTH/2 - 33, " \\    / /\\  (_  | \\   _'_   |_)   |   / \\    | / \\   |_ \\/  |   | ");
-    mvprintw(26, MAP_WIDTH/2 - 33, "  \\/\\/ /--\\ __) |_/    '    | \\   |   \\_X    | \\_/   |_ /\\ _|_  | ");
+    mvprintw(28, MAP_WIDTH/2 - 33, "             __  _           _    |    _    ___ _     _    ___ ___");
+    mvprintw(29, MAP_WIDTH/2 - 33, " \\    / /\\  (_  | \\   _'_   |_)   |   / \\    | / \\   |_ \\/  |   | ");
+    mvprintw(30, MAP_WIDTH/2 - 33, "  \\/\\/ /--\\ __) |_/    '    | \\   |   \\_X    | \\_/   |_ /\\ _|_  | ");
     attroff(COLOR_PAIR(3));
     
     refresh();
@@ -145,13 +161,13 @@ void showDeathScreen(void) {
     attron(A_BOLD | COLOR_PAIR(7));
     
     // Death Message
-    mvprintw(2, MAP_WIDTH/2 - 31, "  ____      __ __       ____       ____        ___      ___   ");
-    mvprintw(3, MAP_WIDTH/2 - 31, " |    |    |  |  |     /    |     /    |      /  _]    |   \\  ");
-    mvprintw(4, MAP_WIDTH/2 - 31, " |__  |    |  |  |    |   __|    |   __|     /  [_     |    \\ ");
-    mvprintw(5, MAP_WIDTH/2 - 31, " __|  |    |  |  |    |  |  |    |  |  |    |    _]    |  \\  |");
-    mvprintw(6, MAP_WIDTH/2 - 31, "/  |  |    |  :  |    |  |_ |    |  |_ |    |   [_     |  /  |");
-    mvprintw(7, MAP_WIDTH/2 - 31, "\\  `  |    |     |    |     |    |     |    |     |    |     |");
-    mvprintw(8, MAP_WIDTH/2 - 31, " \\____j     \\__,_|    |___,_|    |___,_|    |_____|    |_____|");
+    mvprintw(2, MAP_WIDTH/2 - 27, "     ___  __   __  _______  _______  _______  ______  ");
+    mvprintw(3, MAP_WIDTH/2 - 27, "    |   ||  | |  ||       ||       ||       ||      | ");
+    mvprintw(4, MAP_WIDTH/2 - 27, "    |   ||  | |  ||    ___||    ___||    ___||  _    |");
+    mvprintw(5, MAP_WIDTH/2 - 27, "    |   ||  |_|  ||   | __ |   | __ |   |___ | | |   |");
+    mvprintw(6, MAP_WIDTH/2 - 27, " ___|   ||       ||   ||  ||   ||  ||    ___|| |_|   |");
+    mvprintw(7, MAP_WIDTH/2 - 27, "|       ||       ||   |_| ||   |_| ||   |___ |       |");
+    mvprintw(8, MAP_WIDTH/2 - 27, "|_______||_______||_______||_______||_______||______| ");
     
     // Stats Display
     attron(COLOR_PAIR(1));    
@@ -186,7 +202,7 @@ void showDeathScreen(void) {
     mvprintw(18, MAP_WIDTH/2 - 24, " \\_| \\_/ \\_/ |_/   |_ |  |  \\_/ | \\ |    o  | ");
     mvprintw(19, MAP_WIDTH/2 - 24, "                                           /  ");
     
-    // Restart Prompt
+    // Exit Prompt
     attron(COLOR_PAIR(3));  
     mvprintw(21, MAP_WIDTH/2 - 26, "  _   _   _  __  __    _    ___ _     _    ___ ___");
     mvprintw(22, MAP_WIDTH/2 - 26, " |_) |_) |_ (_  (_    / \\    | / \\   |_ \\/  |   | ");
@@ -199,4 +215,36 @@ void showDeathScreen(void) {
     endwin();
     exit(0);
 
+}
+
+void showVictoryScreen(void) {
+    clear();
+    attron(A_BOLD | COLOR_PAIR(5));
+    
+    // Victory Message
+    mvprintw(2, MAP_WIDTH/2 - 30, " __   __  ___   ______  _______  _______  ______    __   __ ");
+    mvprintw(3, MAP_WIDTH/2 - 30, "|  | |  ||   | |     _||       ||       ||    _ |  |  | |  |");
+    mvprintw(4, MAP_WIDTH/2 - 30, "|  |_|  ||   | |    |  |_     _||   _   ||   | ||  |  |_|  |");
+    mvprintw(5, MAP_WIDTH/2 - 30, "|       ||   | |    |    |   |  |  | |  ||   |_||_ |       |");
+    mvprintw(6, MAP_WIDTH/2 - 30, "|       ||   | |    |    |   |  |  |_|  ||    __  ||_     _|");
+    mvprintw(7, MAP_WIDTH/2 - 30, " |     | |   | |    |_   |   |  |       ||   |  | |  |   |  ");
+    mvprintw(8, MAP_WIDTH/2 - 30, "  |___|  |___| |______|  |___|  |_______||___|  |_|  |___|  ");
+
+    attron(COLOR_PAIR(4));
+    mvprintw(13, MAP_WIDTH/2 - 16, "\\ / _       __ __ __ _  _  __ _ ");
+    mvprintw(14, MAP_WIDTH/2 - 16, " Y / \\| |  |_ (_ /  |_||_)|_ | \\");
+    mvprintw(15, MAP_WIDTH/2 - 16, " | \\_/|_|  |__ _)\\__| ||  |__|_/");
+    
+    // Exit Prompt
+    attron(COLOR_PAIR(3));  
+    mvprintw(21, MAP_WIDTH/2 - 26, "  _   _   _  __  __    _    ___ _     _    ___ ___");
+    mvprintw(22, MAP_WIDTH/2 - 26, " |_) |_) |_ (_  (_    / \\    | / \\   |_ \\/  |   | ");
+    mvprintw(23, MAP_WIDTH/2 - 26, " |   | \\ |_ __) __)   \\_X    | \\_/   |_ /\\ _|_  | ");
+    refresh();
+    
+    // Input Handling
+    int input;
+    while ((input = getch()) && input != 'q') {}  
+    endwin();
+    exit(0);
 }
