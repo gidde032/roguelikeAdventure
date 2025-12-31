@@ -1,5 +1,7 @@
 # The Adventures of Juggman: A Roguelike Journey
 
+<img width="841" height="563" alt="Screenshot 2025-12-31 at 9 21 13 AM" src="https://github.com/user-attachments/assets/98483090-139d-4a32-96f4-1dc383955e28" />
+
 A terminal-based roguelike dungeon crawler built in C with ncurses. Navigate procedurally generated dungeons, battle monsters, collect items, and ascend through increasingly difficult levels in an attempt to escape the dungeon.
 
 ## Features
@@ -41,6 +43,8 @@ roguelike/
 ```
 
 ### Key Algorithms
+
+<img width="753" height="461" alt="Screenshot 2025-12-31 at 9 22 23 AM" src="https://github.com/user-attachments/assets/f68c0684-ec1f-4a13-9558-ff0bf81bad33" />
 
 **Field of View (FOV)**: Implements Bresenham's line algorithm to determine visible tiles within a 15-tile radius, accounting for walls and obstacles blocking player's sightlines.
 
@@ -112,6 +116,8 @@ make clean
 
 ### Game Mechanics
 
+<img width="369" height="263" alt="Screenshot 2025-12-31 at 9 22 59 AM" src="https://github.com/user-attachments/assets/1793f177-75ce-4ee7-9e94-25e0e3ebd77b" />
+
 **Exploration**: Navigate through procedurally generated dungeons represented by ASCII characters:
 - `.` - Floor tiles (walkable)
 - `#` - Wall tiles (impassable)
@@ -138,15 +144,23 @@ make clean
 - Black areas are unexplored
 
 ### Win Condition
+
+<img width="565" height="437" alt="Screenshot 2025-12-31 at 11 03 28 AM" src="https://github.com/user-attachments/assets/0cae1262-be61-46ff-8540-6b66fa3ccfd3" />
+
 Successfully ascend all three dungeon levels by locating and using the ladder (`>`) on each floor. Ascend the final ladder (`^`) to win the game and display a congratulatory screen commending your achievement.
 
 ### Loss Condition
+
+<img width="540" height="427" alt="Screenshot 2025-12-31 at 10 57 47 AM" src="https://github.com/user-attachments/assets/c5113e49-6a2e-4b50-9305-73496a9dae9d" />
+
 If the player's health points (HP) reach zero, the game is lost, and the death screen is displayed, noting the highest level reached by the player.
 
 ### Stat Tracking
 The total number of monsters defeated ("juggs hit"), the player's HP and attack, and the current level are tracked during each run.
 
 ## Game Stats
+
+<img width="377" height="275" alt="Screenshot 2025-12-31 at 9 28 08 AM" src="https://github.com/user-attachments/assets/f8da9bc5-9c9f-467b-8abf-c28d2d72c7c9" />
 
 The HUD displays:
 - **HP**: Current and maximum health points
@@ -163,6 +177,9 @@ Memory is dynamically allocated for all game entities, and carefully deallocated
 Each enemy type and game system (FOV, combat, rendering) is separated into its own source file for maintainability and scalability. The header file maintains a single source of information for all shared data structures.
 
 ### Color System
+
+<img width="754" height="461" alt="Screenshot 2025-12-31 at 9 23 39 AM" src="https://github.com/user-attachments/assets/32cd9fa9-c349-45c2-887c-3eb337d842cd" />
+
 Roguelike Adventure makes use of 8 distinct color pairs to differentiate between entities and provide visual clarity, even in densely populated dungeon areas.
 
 ## Known Limitations
@@ -182,5 +199,7 @@ Planned features for expansion:
 
 ---
 
-**Author**: Finn Gidden
-**Contact**: gidde032@umn.edu
+## Credits
+
+- **Author**: Finn Gidden
+- **Contact**: gidde032@umn.edu
